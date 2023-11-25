@@ -49,7 +49,7 @@ public class Text : MonoBehaviour
             tex.text=val.ToString()+" "+chars[c]+" "+other.ToString()+" = ?";
             }
            
-        } else if (!sqir.GetComponent<SquareMove>().hasenemy) {
+        } else if (!sqir.GetComponent<SquareMove>().hasenemy && !sqir.GetComponent<SquareMove>().selectedenemy) {
             prevval=-1;
             tex.text="";
         }

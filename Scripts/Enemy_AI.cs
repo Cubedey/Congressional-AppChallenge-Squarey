@@ -37,16 +37,10 @@ int moveSpeed;
     // Update is called once per frame
     void Update()
     {
-        if (sqor.GetComponent<SquareMove>().deathi) {
-            Kill();
-        }
+
         dist= Vector3.Distance (sqor.transform.position, this.transform.position);
-        if (transform.position.y<-10f) {
-        Kill();
-        }
-        if (transform.position.y-sqor.GetComponent<SquareMove>().transform.position.y<-10f) {
-        Kill();
-        }
+
+        
         mult=sqor.GetComponent<SquareMove>().timegened;
         mult=(mult/2)*(mult/2)-2;
         moveSpeed=3+Mathf.Min(mult,12);

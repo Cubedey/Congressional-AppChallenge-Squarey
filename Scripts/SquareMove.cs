@@ -17,6 +17,7 @@ public class SquareMove : MonoBehaviour
     public TextMeshProUGUI pNumberDisplay;
     public GameObject screen;
 
+public bool selectedenemy;
 
     private Rigidbody2D sqr;
     public GameObject Trigger;
@@ -52,25 +53,41 @@ public int timegened;
     void Update()
     {
         input.GetComponent<TMP_InputField>().ActivateInputField();
-if (transform.position.y<-10f) {
-        Die();
+
+        bool killq=true;
+        foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Brick")) {
+            if (Vector3.Distance(transform.position, obj.transform.position)<=500f) {
+                killq=false;
+            }
+        }
+        if (killq) {
+            Die();
         }
         List<float> elist = new List<float>();
+        selectedenemy=false;
         foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Enemy")) {
             if (Mathf.Abs(obj.transform.position.x-transform.position.x)<=8 && Mathf.Abs(obj.transform.position.y-transform.position.y)<=4.5) {
                 elist.Add(obj.GetComponent<Enemy_AI>().dist);
+                
+            }
+            if (target!=null && target.GetComponent<Enemy_AI>().dist==obj.GetComponent<Enemy_AI>().dist) {
+                selectedenemy=true;
             }
         }
+        //Debug.Log(selectedenemy);
         if (elist.Count!=0) {
             hasenemy=true;
+            if (!selectedenemy) {
             elist.Sort();
             foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Enemy")) {
                 if (elist[0]==obj.GetComponent<Enemy_AI>().dist) {
                     target=obj;
                 }
             }
+                            
+            }
         }
-        else {
+        else if (!selectedenemy) {
             hasenemy=false;
         }
 float moveSpeed = 8f;
